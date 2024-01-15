@@ -7,8 +7,8 @@ import org.javabrains.koushik.dto.UserDetails;
 public class HibernateTest {
     public static void main(String[] args) {
         UserDetails userDetails = new UserDetails();
-        userDetails.setUserId(1);
-        userDetails.setUserName("First User");
+        userDetails.setUserId(2);
+        userDetails.setUserName("Second User");
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
