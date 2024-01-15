@@ -11,8 +11,15 @@ public class UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    private String userName;
+    private String userName;    
+    private Address address;
 
+    public Address getAddress() {
+        return address;
+    }
+    public void setAddress(Address address) {
+        this.address = address;
+    }
     public int getUserId() {
         return userId;
     }
