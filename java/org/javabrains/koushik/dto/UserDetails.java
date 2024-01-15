@@ -1,4 +1,7 @@
 package org.javabrains.koushik.dto;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,18 +10,33 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "USER_DETAILS")
-public class UserDetails{    
+public class UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @EmbeddedId
     private int userId;
-    private String userName;    
-    private Address address;
+    private String userName;
+    @AttributeOverrides({
+        @AttributeOverride(name = "street", column = @Column(name="HOME_STREET_NAME")),
+        @AttributeOverride(name = "city", column = @Column(name="HOME_CITY_NAME")),
+        @AttributeOverride(name = "state", column = @Column(name="HOME_STATE_NAME")),
+        @AttributeOverride(name = "pincode", column = @Column(name="HOME_PIN_CODE"))
+    })
+    private Address homeAddress;
+    private Address officeAddress;
 
-    public Address getAddress() {
-        return address;
+    
+    public Address getHomeAddress() {
+        return homeAddress;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
+    }
+    public Address getOfficeAddress() {
+        return officeAddress;
+    }
+    public void setOfficeAddress(Address officeAddress) {
+        this.officeAddress = officeAddress;
     }
     public int getUserId() {
         return userId;

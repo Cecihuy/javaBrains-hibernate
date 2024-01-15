@@ -14,7 +14,13 @@ public class HibernateTest {
         address.setStreet("Street Name");
         address.setCity("City Name");
         
-        userDetails.setAddress(address);
+        userDetails.setHomeAddress(address);
+
+        Address address2 = new Address();
+        address2.setStreet("Second Street Name");
+        address2.setCity("Second City Name");
+
+        userDetails.setOfficeAddress(address2);
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
