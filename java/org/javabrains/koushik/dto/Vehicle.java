@@ -1,10 +1,11 @@
 package org.javabrains.koushik.dto;
+import java.util.ArrayList;
+import java.util.Collection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Vehicle {
@@ -12,15 +13,14 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int vehicleId;
     private String vehicleName;
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private UserDetails user;
+    @ManyToMany(mappedBy = "vehicle")
+    private Collection<UserDetails> userList = new ArrayList<>();
 
-    public UserDetails getUser() {
-        return user;
+    public Collection<UserDetails> getUserList() {
+        return userList;
     }
-    public void setUser(UserDetails user) {
-        this.user = user;
+    public void setUserList(Collection<UserDetails> userList) {
+        this.userList = userList;
     }
     public int getVehicleId() {
         return vehicleId;
