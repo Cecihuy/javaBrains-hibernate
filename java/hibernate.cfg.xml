@@ -8,5 +8,6 @@
 		<property name="hbm2ddl.auto">create</property>
 		<property name="show_sql">true</property>
         <mapping class="org.javabrains.koushik.dto.UserDetails"></mapping>
+		<mapping class="org.javabrains.koushik.dto.Vehicle"></mapping>
 	</session-factory>
 </hibernate-configuration>
