@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +18,7 @@ public class UserDetails{
     private int userId;
     private String userName;
     @ElementCollection
+    @JoinTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name="USER_ID "))
     private Set<Address> listOfAddresses = new HashSet<Address>();
         
     public Set<Address> getListOfAddresses() {
