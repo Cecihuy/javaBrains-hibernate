@@ -1,7 +1,7 @@
 package org.javabrains.koushik.dto;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
+import java.util.HashSet;
+import java.util.Set;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,30 +13,16 @@ import jakarta.persistence.Table;
 public class UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // @EmbeddedId
     private int userId;
     private String userName;
-    @AttributeOverrides({
-        @AttributeOverride(name = "street", column = @Column(name="HOME_STREET_NAME")),
-        @AttributeOverride(name = "city", column = @Column(name="HOME_CITY_NAME")),
-        @AttributeOverride(name = "state", column = @Column(name="HOME_STATE_NAME")),
-        @AttributeOverride(name = "pincode", column = @Column(name="HOME_PIN_CODE"))
-    })
-    private Address homeAddress;
-    private Address officeAddress;
-
-    
-    public Address getHomeAddress() {
-        return homeAddress;
+    @ElementCollection
+    private Set<Address> listOfAddresses = new HashSet<Address>();
+        
+    public Set<Address> getListOfAddresses() {
+        return listOfAddresses;
     }
-    public void setHomeAddress(Address homeAddress) {
-        this.homeAddress = homeAddress;
-    }
-    public Address getOfficeAddress() {
-        return officeAddress;
-    }
-    public void setOfficeAddress(Address officeAddress) {
-        this.officeAddress = officeAddress;
+    public void setListOfAddresses(Set<Address> listOfAddresses) {
+        this.listOfAddresses = listOfAddresses;
     }
     public int getUserId() {
         return userId;

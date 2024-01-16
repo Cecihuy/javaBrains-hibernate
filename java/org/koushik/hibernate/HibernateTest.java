@@ -11,16 +11,19 @@ public class HibernateTest {
         userDetails.setUserName("First User");        
 
         Address address = new Address();
-        address.setStreet("Street Name");
-        address.setCity("City Name");
-        
-        userDetails.setHomeAddress(address);
+        address.setStreet("First Street");
+        address.setCity("First City");
+        address.setState("First State");
+        address.setPincode("100001");
 
         Address address2 = new Address();
-        address2.setStreet("Second Street Name");
-        address2.setCity("Second City Name");
+        address2.setStreet("Second Street");
+        address2.setCity("Second City");
+        address2.setState("Second State");
+        address2.setPincode("200002");
 
-        userDetails.setOfficeAddress(address2);
+        userDetails.getListOfAddresses().add(address);
+        userDetails.getListOfAddresses().add(address2);
 
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
