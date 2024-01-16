@@ -2,7 +2,6 @@ package org.koushik.hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.javabrains.koushik.dto.Address;
 import org.javabrains.koushik.dto.UserDetails;
 import org.javabrains.koushik.dto.Vehicle;
 
@@ -19,16 +18,14 @@ public class HibernateTest {
 
         userDetails.getVehicle().add(vehicle);
         userDetails.getVehicle().add(vehicle2);
-        vehicle.getUserList().add(userDetails);
-        vehicle2.getUserList().add(userDetails);
         
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
 
         session.beginTransaction();
         session.persist(userDetails);
-        session.persist(vehicle);
-        session.persist(vehicle2);
+        // session.persist(vehicle);
+        // session.persist(vehicle2);
         session.getTransaction().commit();
 
         session.close();

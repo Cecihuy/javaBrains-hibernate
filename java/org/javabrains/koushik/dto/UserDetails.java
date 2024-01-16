@@ -1,11 +1,12 @@
 package org.javabrains.koushik.dto;
 import java.util.ArrayList;
 import java.util.Collection;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,7 +16,7 @@ public class UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String userName;
-    @ManyToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private Collection<Vehicle> vehicle = new ArrayList<Vehicle>();
     
     public int getUserId() {
@@ -35,5 +36,5 @@ public class UserDetails{
     }
     public void setVehicle(Collection<Vehicle> vehicle) {
         this.vehicle = vehicle;
-    }    
+    }
 }
