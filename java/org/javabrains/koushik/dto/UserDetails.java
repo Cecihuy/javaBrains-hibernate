@@ -1,8 +1,9 @@
 package org.javabrains.koushik.dto;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,14 +18,14 @@ public class UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String userName;
-    @ElementCollection
-    @JoinTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name="USER_ID "))
-    private Set<Address> listOfAddresses = new HashSet<Address>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JoinTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name="USER_ID "))    
+    private Collection<Address> listOfAddresses = new ArrayList<Address>();
         
-    public Set<Address> getListOfAddresses() {
+    public Collection<Address> getListOfAddresses() {
         return listOfAddresses;
     }
-    public void setListOfAddresses(Set<Address> listOfAddresses) {
+    public void setListOfAddresses(Collection<Address> listOfAddresses) {
         this.listOfAddresses = listOfAddresses;
     }
     public int getUserId() {
