@@ -11,13 +11,11 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
 
         session.beginTransaction();
-        for(int i = 0; i < 10; i++){
-            UserDetails userDetails = new UserDetails();
-            userDetails.setUserName("User " + i);
-            session.persist(userDetails);
-        }
+        UserDetails userDetails= session.get(UserDetails.class, 6);        
         session.getTransaction().commit();
 
         session.close();
+
+        System.out.println("User name pulled up is : " + userDetails.getUserName());
     }
 }
