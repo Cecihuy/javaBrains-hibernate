@@ -13,10 +13,12 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         
         session.beginTransaction();
-        String txtBoxId = "3";
+        String txtBoxName = "user 7";
         //use newer method hibernate 6+ instead deprecated method
-        SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byId",UserDetails.class);
-        query.setParameter(1, Integer.parseInt(txtBoxId));
+        // SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byId",UserDetails.class);
+        // query.setParameter(1, Integer.parseInt(txtBoxId));
+        SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byName",UserDetails.class);
+        query.setParameter(1, txtBoxName);
         List<UserDetails> users = query.list();
         session.getTransaction().commit();
         session.close();

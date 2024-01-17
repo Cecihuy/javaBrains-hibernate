@@ -3,10 +3,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
+import jakarta.persistence.NamedNativeQuery;
 
 @Entity
-@NamedQuery(name = "UserDetails.byId", query = "from UserDetails where userId = ?1")
+// @NamedQuery(name = "UserDetails.byId", query = "from UserDetails where userId = ?1")
+@NamedNativeQuery(name = "UserDetails.byName", query = "select * from userdetails where userName = ?1", resultClass = UserDetails.class)
 public class UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
