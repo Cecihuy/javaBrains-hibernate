@@ -14,11 +14,9 @@ public class HibernateTest {
         
         session.beginTransaction();
         String txtBoxId = "3";
-        String txtBoxName = "user 5";
         //use newer method hibernate 6+ instead deprecated method
-        SelectionQuery<UserDetails> query = session.createSelectionQuery("from UserDetails where userId > :pertama and userName = :kedua", UserDetails.class);
-        query.setParameter("pertama", Integer.parseInt(txtBoxId));
-        query.setParameter("kedua", txtBoxName);
+        SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byId",UserDetails.class);
+        query.setParameter(1, Integer.parseInt(txtBoxId));
         List<UserDetails> users = query.list();
         session.getTransaction().commit();
         session.close();

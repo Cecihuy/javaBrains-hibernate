@@ -3,8 +3,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "UserDetails.byId", query = "from UserDetails where userId = ?1")
 public class UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
