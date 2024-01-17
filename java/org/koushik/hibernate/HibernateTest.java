@@ -2,30 +2,31 @@ package org.koushik.hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.javabrains.koushik.dto.UserDetails;
+import org.javabrains.koushik.dto.FourWheeler;
+import org.javabrains.koushik.dto.TwoWheeler;
 import org.javabrains.koushik.dto.Vehicle;
 
 public class HibernateTest {
-    public static void main(String[] args) {
-        UserDetails userDetails = new UserDetails();
-        userDetails.setUserName("First User");
+    public static void main(String[] args) {                
 
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleName("Car");
 
-        Vehicle vehicle2 = new Vehicle();
-        vehicle2.setVehicleName("Jeep");
+        TwoWheeler bike = new TwoWheeler();
+        bike.setVehicleName("Yamaha");
+        bike.setSteeringHandle("handle steer");
 
-        userDetails.getVehicle().add(vehicle);
-        userDetails.getVehicle().add(vehicle2);
+        FourWheeler car = new FourWheeler();
+        car.setVehicleName("Ford");
+        car.setSteeringWheel("round steer");
         
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
 
         session.beginTransaction();
-        session.persist(userDetails);
-        // session.persist(vehicle);
-        // session.persist(vehicle2);
+        session.persist(vehicle);
+        session.persist(bike);
+        session.persist(car);
         session.getTransaction().commit();
 
         session.close();
