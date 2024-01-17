@@ -14,13 +14,15 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         
         session.beginTransaction();
-        // Query<UserDetails> query = session.createQuery("from UserDetails", UserDetails.class);
-        Query<UserDetails> query2 = session.createQuery("from UserDetails where userId > 5", UserDetails.class);
-        List<UserDetails> users = query2.list();
+        Query<UserDetails> query = session.createQuery("from UserDetails", UserDetails.class);
+        query.setFirstResult(3);
+        query.setMaxResults(2);
+        List<UserDetails> users = query.list();
         session.getTransaction().commit();
         session.close();
 
-        System.out.println("Size of list result = " + users.size());
-        System.out.println("Get username by index from result of query2 = " + users.get(1).getUserName());        
+        for(UserDetails efl:users){
+            System.out.println(efl.getUserName());
+        }
     }
 }
