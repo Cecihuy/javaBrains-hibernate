@@ -7,19 +7,21 @@ import org.javabrains.koushik.dto.UserDetails;
 public class HibernateTest {
     public static void main(String[] args) {        
 
-        UserDetails userDetails = new UserDetails();
-        userDetails.setUserName("Test User");   //transient
-
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
 
-        session.beginTransaction();        
-        session.persist(userDetails);
-        userDetails.setUserName("Updated User again");
-        userDetails.setUserName("Last Updated User");   //persist
+        session.beginTransaction();
+        UserDetails userDetails = session.get(UserDetails.class, 1);
         session.getTransaction().commit();
-        userDetails.setUserName("Detach object can't be save after session close"); //detach
+        session.close();
 
+        userDetails.setUserName("Detached object become persist again");
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.merge(userDetails);
+        userDetails.setUserName("set after merge doesnt track last change, i don't know why. with update method it can track last change");
+        session.getTransaction().commit();
         session.close();
     }
 }
