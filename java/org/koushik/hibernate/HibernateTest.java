@@ -11,8 +11,9 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
 
         session.beginTransaction();
-        UserDetails userDetails= session.get(UserDetails.class, 6);
-        session.remove(userDetails);
+        UserDetails userDetails= session.get(UserDetails.class, 5);
+        userDetails.setUserName("Updated User");
+        session.merge(userDetails);
         session.getTransaction().commit();
 
         session.close();
