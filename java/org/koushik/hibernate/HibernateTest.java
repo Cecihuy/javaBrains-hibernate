@@ -1,6 +1,5 @@
 package org.koushik.hibernate;
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -14,15 +13,16 @@ public class HibernateTest {
         Session session = sessionFactory.openSession();
         
         session.beginTransaction();
-        Query<UserDetails> query = session.createQuery("from UserDetails", UserDetails.class);
+        Query query = session.createQuery("select userName from UserDetails", UserDetails.class);
+        // Query query = session.createQuery("select max(userId) from UserDetails", UserDetails.class);
         query.setFirstResult(3);
         query.setMaxResults(2);
-        List<UserDetails> users = query.list();
+        List<String> users = query.list();
         session.getTransaction().commit();
         session.close();
 
-        for(UserDetails efl:users){
-            System.out.println(efl.getUserName());
+        for(String efl:users){
+            System.out.println(efl);
         }
     }
 }
