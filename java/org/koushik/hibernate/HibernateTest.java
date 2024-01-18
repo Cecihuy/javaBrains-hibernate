@@ -7,6 +7,7 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 public class HibernateTest {
@@ -20,7 +21,9 @@ public class HibernateTest {
         CriteriaQuery<UserDetails> criteriaQuery = criteriaBuilder.createQuery(UserDetails.class);
         Root<UserDetails> root = criteriaQuery.from(UserDetails.class);
         
-        CriteriaQuery<UserDetails> queryLogic = criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("userName"), "user 3"));
+        Predicate pred1 = criteriaBuilder.between(root.get("userId"), 2, 3);
+        Predicate pred2 = criteriaBuilder.between(root.get("userId"), 5, 6);
+        CriteriaQuery<UserDetails> queryLogic = criteriaQuery.select(root).where(criteriaBuilder.or(pred1, pred2));
 
         TypedQuery<UserDetails> typedQuery = em.createQuery(queryLogic);
         List<UserDetails> details = typedQuery.getResultList();
