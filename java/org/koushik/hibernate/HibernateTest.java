@@ -1,30 +1,34 @@
 package org.koushik.hibernate;
-import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.SelectionQuery;
 import org.javabrains.koushik.dto.UserDetails;
+import java.util.List;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 public class HibernateTest {
-    public static void main(String[] args) {        
-
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+    public static void main(String[] args) {
         
-        session.beginTransaction();
-        String txtBoxName = "user 7";
-        //use newer method hibernate 6+ instead deprecated method
-        // SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byId",UserDetails.class);
-        // query.setParameter(1, Integer.parseInt(txtBoxId));
-        SelectionQuery<UserDetails> query = session.createNamedQuery("UserDetails.byName",UserDetails.class);
-        query.setParameter(1, txtBoxName);
-        List<UserDetails> users = query.list();
-        session.getTransaction().commit();
-        session.close();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("siapaBelumMandi");
+        EntityManager em = emf.createEntityManager();
 
-        for(UserDetails efl:users){
-            System.out.println(efl.getUserName());
+        em.getTransaction().begin();
+        CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+        CriteriaQuery<UserDetails> criteriaQuery = criteriaBuilder.createQuery(UserDetails.class);
+        Root<UserDetails> root = criteriaQuery.from(UserDetails.class);
+        
+        CriteriaQuery<UserDetails> queryLogic = criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("userName"), "user 3"));
+
+        TypedQuery<UserDetails> typedQuery = em.createQuery(queryLogic);
+        List<UserDetails> details = typedQuery.getResultList();
+        em.getTransaction().commit();
+        em.close();
+
+        for(UserDetails efl:(List<UserDetails>)details){
+            System.out.println(efl.getUserId() + " : " + efl.getUserName());
         }
     }
 }
