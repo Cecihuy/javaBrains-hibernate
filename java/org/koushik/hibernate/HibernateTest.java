@@ -7,7 +7,6 @@ import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 public class HibernateTest {
@@ -18,20 +17,18 @@ public class HibernateTest {
 
         em.getTransaction().begin();
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-        CriteriaQuery<UserDetails> criteriaQuery = criteriaBuilder.createQuery(UserDetails.class);
+        CriteriaQuery<Integer> criteriaQuery = criteriaBuilder.createQuery(Integer.class);
         Root<UserDetails> root = criteriaQuery.from(UserDetails.class);
-        
-        Predicate pred1 = criteriaBuilder.between(root.get("userId"), 2, 3);
-        Predicate pred2 = criteriaBuilder.between(root.get("userId"), 5, 6);
-        CriteriaQuery<UserDetails> queryLogic = criteriaQuery.select(root).where(criteriaBuilder.or(pred1, pred2));
+        CriteriaQuery<Integer> queryLogic = criteriaQuery.select(root.get("userId"));
 
-        TypedQuery<UserDetails> typedQuery = em.createQuery(queryLogic);
-        List<UserDetails> details = typedQuery.getResultList();
+        TypedQuery<Integer> typedQuery = em.createQuery(queryLogic);
+        List<Integer> details = typedQuery.getResultList();
+
         em.getTransaction().commit();
         em.close();
 
-        for(UserDetails efl:(List<UserDetails>)details){
-            System.out.println(efl.getUserId() + " : " + efl.getUserName());
+        for(Integer efl:details){
+            System.out.println(efl);
         }
     }
 }
